@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quotes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <p style="text-align: right" ><a href="/main">Dashboard</a> | <a href="/logout">Logout</a></p>
+            <h2>Posted by {{quote.posted_by.name}}</h2><br>
+            {% for quotes in quotes_all %}
+                <p>{{quotes.author}}: {{quotes.intext}}</p>
+            {% endfor %}
+        </div>
+    </body>
+</html>

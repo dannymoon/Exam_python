@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quotes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <p style="text-align: right" ><a href="/logout">Logout</a></p>
+            <h2>Welcome, {{request.session.login_status.name}}!</h2><br>
+            <div>
+                <p>Quotable Quotes</p>
+                <div class="col-md-5">
+                    {% for quotes in quotes_all %}
+                    <p>{{quotes.author}}: {{quotes.intext}}</p>
+                    <form action="/add_to_favorite" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="quote_id" value="{{quotes.id}}">
+                    <input type="submit" value="Add to My List">
+                    </form>
+                    <p>Posted by <a href="/users/{{quote.posted_by.id}}"></a>{{quote.posted_by.name}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <p>Your Favorites</p>
+                <div class="col-md-5">
+                    {% for quotes in quotes_all %}
+                    <p>{{quotes.author}}: {{quotes.intext}}</p>
+                    <form action="/remove_from_favorite" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="quote_id" value="{{quotes.id}}">
+                    <input type="submit" value="Remove From My List">
+                    </form>
+                    <p>Posted by <a href="/users/{{this_user.id}}"></a>{{this_user.name}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <form action="/create" method="post">
+                    {% csrf_token %}
+                    <h3>Contribute a Quote:</h3>
+                    Quoted By:
+                    <input type="text" name="author"><br>
+                    Message:
+                    <input type="text" name="intext">
+                    <br><input type="submit" value="Submit">
+                </form>
+        </div>
+    </body>
+</html>
